@@ -1,6 +1,18 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+    background-color: rgb(233, 227, 227);
+    padding-bottom: 261px;
+}
+
 .formTitle {
-    margin: 0;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 5px;
     color: rgb(88, 56, 177);
+    margin-top: 15px;
 }
 
 .title {
@@ -8,22 +20,19 @@
     font-weight: 700;
     margin-bottom: 7px;
     color: rgb(88, 56, 177);
+    margin-top: 20px;
 }
 
-.form {
-    display: flex;
-    flex-direction: column;
-    /* align-items: center; */
+.inputPaper {
+    border: 1px solid rgb(233, 227, 227);
     max-width: 100%;
-    background-color: rgb(233, 227, 227);
+    box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.75);
 }
 
 .button {
-    width: 150px;
     padding: 2px 30px;
     text-align: center;
     margin-top: 20px;
-    margin-left: 20px;
     font-size: 15px;
     font-weight: 700;
     cursor: pointer;
@@ -37,11 +46,5 @@
 .button:hover {
     background-color: rgb(255, 46, 210);
     color: #fff;
-    /* border: 1px solid #f8f8f8; */
-}
-
-.inputPaper {
-    border: 1px solid rgb(233, 227, 227);
-    max-width: 100%;
-    box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.75);
+    border: 2px solid #f8f8f8;
 }

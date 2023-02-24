@@ -1,87 +1,83 @@
-import React from 'react';
-import { nanoid } from 'nanoid';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectContacts } from 'redux/contact/contactsSelector';
+import { nanoid } from '@reduxjs/toolkit';
+import { addContact } from '../../redux/contactsSlice/operations';
 import css from './ContactForm.module.scss';
-// import { addContactAction } from 'redux/contact/contact-slice';
-import { addContact } from 'redux/operations';
 
-export default function ContactForm({ onSubmit }) {
-    const [name, setName] = React.useState("");
-    const [number, setNumber] = React.useState("");
+const INITIAL_FORM_DATA = {
+    contactName: '',
+    contactNumber: '',
+};
+
+const ContactForm = () => {
+    const contacts = useSelector((state) => state.contactsData.contacts);
+    const [formData, setFormData] = useState(INITIAL_FORM_DATA)
     const dispatch = useDispatch();
 
-    const nameId = nanoid();
-    const numberId = nanoid();
-    
-    const filterContact = useSelector(selectContacts);
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const data = { name, number, id: nanoid() };
-        if (filterContact.find((contact) => contact.name.toLowerCase() === name.toLowerCase())) {
-              alert(`${name} is already in contacts.`);
-        }
-        // else {
-        //     const contact = {
-        //         id: nanoid(),
-        //         name,
-        //         number,
-        //     };
-        //     // setContacts((state) => [...state, contact]);
-        // }
-        dispatch(addContact(data))
-        resetForm();
-    };
-    const handleChange = (e) => {
+    const onChange = e => {
         const { name, value } = e.target;
-        if (name === "name") {
-            setName(value);
-        } else if (name === "number") {
-            setNumber(value);
-        } else {
-            alert(`Something happen (-_-)`);
-        }
-    };
-    
-    const resetForm = () => {
-        setName("");
-        setNumber("");
+
+        setFormData(prevState => ({ ...prevState, [name]: value }));
     };
 
+    const onSubmitForm = e => {
+        e.preventDefault();
+        const newContact = {
+            id: nanoid(),
+            name: formData.contactName,
+            number: formData.contactNumber,
+        };
+        if (contacts.some(contact =>
+            contact.name.toLowerCase() === newContact.name.toLowerCase())
+        ) {
+            alert(`${newContact.name} is already in contact list.`);
+            return;
+        }
+        dispatch(addContact(newContact));
+        reset();
+    };
+
+    const reset = () => {
+        setFormData(INITIAL_FORM_DATA)
+    }
+
     return (
-        <div className={css.contacts}>
-            {/* <h1 className={css.contactsHeader}>PhoneBook</h1> */}
-            <form onSubmit={handleSubmit}>
-                <div className={css.contactsInnerBlock}>
-                    <p className={css.contactsName}>Name</p>
+        <div>
+            <form className={css.form} onSubmit={onSubmitForm}>
+                <h2 className={css.formTitle}>Add contact</h2>
+                <label>
+                    <p className={css.title}>Name</p>
                     <input
-                        onChange={handleChange}
-                        className={css.contactsInput}
-                        value={name}
-                        id={nameId}
-                        minLength={4}
+                        className={css.inputPaper}
                         type="text"
-                        name="name"
+                        name="contactName"
                         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                        onChange={onChange}
+                        value={formData.contactName}
+                        placeholder='Write name'
                         required
                     />
-                    <p className={css.contactsName}>Number</p>
+                </label>
+                <label>
+                    <p className={css.title}>Number</p>
                     <input
-                        onChange={handleChange}
-                        className={css.contactsInput}
-                        value={number}
-                        minLength={7}
-                        id={numberId}
+                        className={css.inputPaper}
                         type="tel"
-                        name="number"
+                        name="contactNumber"
                         pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                        onChange={onChange}
+                        value={formData.contactNumber}
+                        placeholder='Write phone number'
                         required
                     />
-                    <button className={css.contactsButton} type="submit">Add contact</button>
-                </div>
+                </label>
+
+                <button className={css.button} type="submit">Add contact</button>
             </form>
         </div>
     )
-};
+}
+
+export default ContactForm;

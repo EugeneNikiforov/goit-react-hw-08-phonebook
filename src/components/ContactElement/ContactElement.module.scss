@@ -1,0 +1,28 @@
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* margin-top: 5px; */
+    margin: 5px 5px 5px 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.button {
+    width: 80px;
+    text-align: center;
+    margin-left: 18px;
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+    background-color: rgb(88, 56, 177);
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 6px;
+}
+
+.button:hover {
+    background-color: rgb(255, 46, 210);
+    color: #fff;
+    /* border: 2px solid #f8f8f8; */
+}
