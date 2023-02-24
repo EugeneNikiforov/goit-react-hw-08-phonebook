@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import WithAuthRedirect from '../Redirect/WithAuthRedirect';
 import ContactForm from 'components/ContactForm/ContactForm';
-import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/contactsSlice/operations';
 import Loader from 'components/Loader/Loader';
 import css from '../components/ContactList/ContactList.module.scss';
+import Filter from 'components/Filter/Filter';
 
 function ContactsPage() {
     const dispatch = useDispatch();
