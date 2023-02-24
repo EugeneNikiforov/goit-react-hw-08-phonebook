@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import WithAuthRedirect from '../Redirect/WithAuthRedirect';
 import ContactForm from 'components/ContactForm/ContactForm';
-import Filter from '../components/Filter/Filter';
+import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContacts } from 'redux/contactsSlice/operations';
